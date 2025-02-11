@@ -14,8 +14,6 @@ const { Keyboard } = require('telegram-keyboard')
 server.use(express.static(path.join(__dirname, 'DarkGame')));
 bot.onText(/help/, (msg) => bot.sendMessage(msg.from.id, "Say /game if you want to play."));
 bot.onText(/start|game/, (msg) => {
-
-
     const imageUrl = "https://mrhia.github.io/DarkKnightwebgl/images/BannerChat.jpg";
     bot.sendPhoto(msg.from.id, imageUrl, {
         caption: "👯 Got friends? Invite them! Spread the fun and multiply your SEED together."
@@ -39,22 +37,21 @@ bot.onText(/start|game/, (msg) => {
 
 });
 
-bot.on("callback_query", function (query) {
-    if (query.game_short_name !== gameName) {
-        bot.answerCallbackQuery(query.id, "Sorry, '" + query.game_short_name + "' is not available.");
-    } else {
-        queries[query.id] = query;
+// bot.on("callback_query", function (query) {
+//     if (query.game_short_name !== gameName) {
+//         bot.answerCallbackQuery(query.id, "Sorry, '" + query.game_short_name + "' is not available.");
+//     } else {
+//         queries[query.id] = query;
 
-    }
-});
-bot.on("inline_query", function (iq) {
-    bot.answerInlineQuery(iq.id, [{
-        type: "game",
-        id: "0",
-        game_short_name: gameName
-    }]);
-});
-
+//     }
+// });
+// bot.on("inline_query", function (iq) {
+//     bot.answerInlineQuery(iq.id, [{
+//         type: "game",
+//         id: "0",
+//         game_short_name: gameName
+//     }]);
+// });
 // server.get("/highscore/:score", function (req, res, next) {
 //     if (!Object.hasOwnProperty.call(queries, req.query.id)) return next();
 //     let query = queries[req.query.id];
