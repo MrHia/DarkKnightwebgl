@@ -10,7 +10,7 @@ const port = process.env.PORT || 5000;
 const gameName = "DarkGame";
 const queries = {};
 const { Keyboard } = require('telegram-keyboard')
-server.use(express.static(path.join(__dirname, ten_game)));
+server.use(express.static(path.join(__dirname, 'DarkGame')));
 bot.onText(/help/, (msg) => bot.sendMessage(msg.from.id, "Say /game if you want to play."));
 bot.onText(/start|game/, (msg) => {
 	//bot.sendGame(msg.from.id, gameName)
@@ -24,7 +24,7 @@ bot.onText(/start|game/, (msg) => {
                 [{
                     text: 'Play Game Here',
                      web_app: {
-				     url: "link_game"
+				     url: "https://t.me/Dark_Knight_68_bot/DarkGame"
 					}
                 }]
             ]
