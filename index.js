@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require("path");
 const TelegramBot = require("node-telegram-bot-api");
-const TOKEN = "7661488868:AAE6sHVGGKBZ13Reg4kHZryTTMT7H3VG5lU";
+const TOKEN = process.env.BOT_TOKEN;
 const server = express();
 const bot = new TelegramBot(TOKEN, {
     polling: true
@@ -13,6 +13,7 @@ const { Keyboard } = require('telegram-keyboard')
 
 server.use(express.static(path.join(__dirname, 'DarkGame')));
 bot.onText(/help/, (msg) => bot.sendMessage(msg.from.id, "Say /game if you want to play."));
+
 bot.onText(/start|game/, (msg) => {
     const imageUrl = "https://mrhia.github.io/DarkKnightwebgl/images/BannerChat.jpg";
     bot.sendPhoto(msg.from.id, imageUrl, {
