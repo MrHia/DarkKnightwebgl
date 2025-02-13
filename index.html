@@ -12,6 +12,27 @@
     style="width: 1080px; height: 1920px; background: url('Build/DarkKnightWebGL.jpg') center / cover"></canvas>
   <script src="Build/DarkKnightWebGL.loader.js"></script>
   <script>
+    var canvas = document.querySelector("#unity-canvas");
+
+    function getWidth() {
+      return Math.min(
+        document.body.scrollWidth,
+        document.documentElement.scrollWidth,
+        document.body.offsetWidth,
+        document.documentElement.offsetWidth,
+        document.documentElement.clientWidth
+      );
+    }
+
+    function getHeight() {
+      return Math.min(
+        document.body.scrollHeight,
+        document.documentElement.scrollHeight,
+        document.body.offsetHeight,
+        document.documentElement.offsetHeight,
+        document.documentElement.clientHeight
+      );
+    }
     if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
       // Mobile device style: fill the whole browser client area with the game canvas:
       var meta = document.createElement('meta');
@@ -19,7 +40,6 @@
       meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
       document.getElementsByTagName('head')[0].appendChild(meta);
 
-      var canvas = document.querySelector("#unity-canvas");
       canvas.style.width = "100%";
       canvas.style.height = "100%";
       canvas.style.position = "fixed";
@@ -27,32 +47,21 @@
       document.body.style.textAlign = "left";
     } else {
       // Desktop: Set Full HD resolution (1920x1080)
-      var canvas = document.querySelector("#unity-canvas");
-      canvas.style.width = "1920px";
-      canvas.style.height = "1080px";
-      canvas.style.position = "absolute";
-      canvas.style.top = "50%";
-      canvas.style.left = "50%";
-      canvas.style.transform = "translate(-50%, -50%)"; // Center canvas in the viewport
+      var height = getHeight();
+      var width = getWidth();
+      var newWidth = Math.min(width, height * 9 / 16);
+      canvas.style.width = newWidth + "px";
+      canvas.style.height = height + "px";
 
-      document.body.style.margin = "0";
-      document.body.style.overflow = "hidden"; // Prevent scrolling
-      document.documentElement.style.backgroundColor = "black"; // Optional: Set background color
+      window.onresize = function (event) {
+        console.log('Window resizing');
+        var height = getHeight();
+        var width = getWidth();
+        var newWidth = Math.min(width, height * 9 / 16);
+        canvas.style.width = newWidth + "px";
+        canvas.style.height = height + "px";
+      };
     }
-
-    //   var meta = document.createElement('meta');
-    //   meta.name = 'viewport';
-    //   meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
-    //   document.getElementsByTagName('head')[0].appendChild(meta);
-    //   container.className = "unity-mobile";
-    //   canvas.className = "unity-mobile";
-    // } else {
-    //   var height = getHeight();
-    //   canvas.style.width = (height * 9 / 16) + "px";
-    //   canvas.style.height = height + "px";
-    //   console.log('Width:  ' + getWidth());
-    //   console.log('Height: ' + height);
-    // }
 
     createUnityInstance(document.querySelector("#unity-canvas"), {
       arguments: [],
