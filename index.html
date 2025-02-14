@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Dark Knight</title>
+    <title>Unity Web Player | Dark Knight</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -17,11 +17,11 @@
         </div>
       </div>
       <div id="unity-warning"> </div>
-<!--      <div id="unity-footer">-->
-<!--        <div id="unity-logo-title-footer"></div>-->
-<!--        <div id="unity-fullscreen-button"></div>-->
-<!--        <div id="unity-build-title">Dark Knight</div>-->
-<!--      </div>-->
+      <div id="unity-footer">
+        <div id="unity-logo-title-footer"></div>
+        <div id="unity-fullscreen-button"></div>
+        <div id="unity-build-title">Dark Knight</div>
+      </div>
     </div>
     <script>
       var canvas = document.querySelector("#unity-canvas");
@@ -52,12 +52,12 @@
       }
 
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/DarkKnightBuild.loader.js";
+      var loaderUrl = buildUrl + "/DarkKnightWebGL.loader.js";
       var config = {
         arguments: [],
-        dataUrl: buildUrl + "/DarkKnightBuild.data",
-        frameworkUrl: buildUrl + "/DarkKnightBuild.framework.js",
-        codeUrl: buildUrl + "/DarkKnightBuild.wasm",
+        dataUrl: buildUrl + "/DarkKnightWebGL.data",
+        frameworkUrl: buildUrl + "/DarkKnightWebGL.framework.js",
+        codeUrl: buildUrl + "/DarkKnightWebGL.wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "Hia",
         productName: "Dark Knight",
@@ -100,17 +100,9 @@
         // Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
         canvas.style.width = "1080px";
         canvas.style.height = "1920px";
-        window.onresize = function (event) {
-          console.log('Window resizing');
-          var height = getHeight();
-          var width = getWidth();
-          var newWidth = Math.min(width, height * 9 / 16);
-          canvas.style.width = newWidth + "px";
-          canvas.style.height = height + "px";
-        };
       }
 
-      canvas.style.background = "url('" + buildUrl + "/DarkKnightBuild.jpg') center / cover";
+      canvas.style.background = "url('" + buildUrl + "/DarkKnightWebGL.jpg') center / cover";
       document.querySelector("#unity-loading-bar").style.display = "block";
 
       var script = document.createElement("script");
@@ -130,25 +122,7 @@
             };
 
       document.body.appendChild(script);
-      function getWidth() {
-        return Math.min(
-                document.body.scrollWidth,
-                document.documentElement.scrollWidth,
-                document.body.offsetWidth,
-                document.documentElement.offsetWidth,
-                document.documentElement.clientWidth
-        );
-      }
 
-      function getHeight() {
-        return Math.min(
-                document.body.scrollHeight,
-                document.documentElement.scrollHeight,
-                document.body.offsetHeight,
-                document.documentElement.offsetHeight,
-                document.documentElement.clientHeight
-        );
-      }
     </script>
   </body>
 </html>
