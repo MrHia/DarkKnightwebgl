@@ -6,6 +6,7 @@
     <title>Unity Web Player | Dark Knight</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
+    <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
   </head>
   <body>
     <div id="unity-container" class="unity-desktop">
@@ -23,6 +24,7 @@
         <div id="unity-build-title">Dark Knight</div>
       </div>
     </div>
+    
     <script>
       var canvas = document.querySelector("#unity-canvas");
 
@@ -52,12 +54,12 @@
       }
 
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/DarkKnightWebGL.loader.js";
+      var loaderUrl = buildUrl + "/TemplateData.loader.js";
       var config = {
         arguments: [],
-        dataUrl: buildUrl + "/DarkKnightWebGL.data",
-        frameworkUrl: buildUrl + "/DarkKnightWebGL.framework.js",
-        codeUrl: buildUrl + "/DarkKnightWebGL.wasm",
+        dataUrl: buildUrl + "/TemplateData.data",
+        frameworkUrl: buildUrl + "/TemplateData.framework.js",
+        codeUrl: buildUrl + "/TemplateData.wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "Hia",
         productName: "Dark Knight",
@@ -102,7 +104,7 @@
         canvas.style.height = "1920px";
       }
 
-      canvas.style.background = "url('" + buildUrl + "/DarkKnightWebGL.jpg') center / cover";
+      canvas.style.background = "url('" + buildUrl + "/TemplateData.jpg') center / cover";
       document.querySelector("#unity-loading-bar").style.display = "block";
 
       var script = document.createElement("script");

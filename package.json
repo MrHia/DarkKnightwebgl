@@ -1,7 +1,6 @@
 {
   "name": "darkknightwebgl",
   "version": "1.0.0",
-  "description": "A simple game using unity deploy in Telegram",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -17,9 +16,9 @@
     "url": "https://github.com/MrHia/DarkKnightwebgl/issues"
   },
   "homepage": "https://github.com/MrHia/DarkKnightwebgl#readme",
+  "description": "",
   "dependencies": {
     "@tonconnect/sdk": "^3.0.6",
-    "@tonconnect/ui": "^2.0.11",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "node-telegram-bot-api": "^0.66.0",
