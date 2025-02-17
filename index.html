@@ -7,6 +7,7 @@
   <title>Unity Web Player | Dark Knight</title>
   <link rel="shortcut icon" href="TemplateData/favicon.ico">
   <link rel="stylesheet" href="TemplateData/style.css">
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
 
 </head>
@@ -32,7 +33,7 @@
     var canvas = document.querySelector("#unity-canvas");
 
     // Shows a temporary message banner/ribbon for a few seconds, or
-    // a permanent error message on top of the canvas if type=='error'.
+    // a permanent error message on top of the canvas if type=='error'. 
     // If type=='warning', a yellow highlight color is used.
     // Modify or remove this function to customize the visually presented
     // way that non-critical warnings and error messages are presented to the
@@ -103,8 +104,11 @@
 
     } else {
       // Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
-      canvas.style.width = "1080px";
-      canvas.style.height = "1920px";
+      var height = getHeight();
+      canvas.style.width = (height * 9 / 16) + "px";
+      canvas.style.height = height + "px";
+      console.log('Width:  ' + getWidth());
+      console.log('Height: ' + height);
     }
 
     canvas.style.background = "url('" + buildUrl + "/TemplateData.jpg') center / cover";
@@ -127,12 +131,33 @@
     };
 
     document.body.appendChild(script);
-    let tonConnect;
+    function getWidth() {
+      return Math.max(
+        document.body.scrollWidth,
+        document.documentElement.scrollWidth,
+        document.body.offsetWidth,
+        document.documentElement.offsetWidth,
+        document.documentElement.clientWidth
+      );
+    }
 
+    function getHeight() {
+      return Math.max(
+        document.body.scrollHeight,
+        document.documentElement.scrollHeight,
+        document.body.offsetHeight,
+        document.documentElement.offsetHeight,
+        document.documentElement.clientHeight
+      );
+    }
+
+
+    let tonConnect;
+    //TonConnectSDK.TonConnect
     // Khởi tạo TonConnect SDK
     window.onload = function () {
-      if (window.TonConnect) {
-        tonConnect = new window.TonConnect({
+      if (window.TonConnectSDK) {
+        tonConnect = new window.TonConnectSDK.TonConnect({
           manifestUrl: "https://mrhia.github.io/DarkKnightwebgl/tonconnect-manifest.json"
         });
 
@@ -140,7 +165,7 @@
           .then(() => console.log('Wallet restored successfully'))
           .catch((error) => console.error('Error restoring connection:', error));
       } else {
-        console.error("TonConnect SDK chưa được tải!");
+        console.error("TonConnect SDKnot found");
       }
     };
 
