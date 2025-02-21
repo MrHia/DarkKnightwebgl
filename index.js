@@ -9,7 +9,6 @@ import { Keyboard } from "telegram-keyboard";
 import { initializeApp } from "firebase/app";
 import { getAnalytics,isSupported  } from "firebase/analytics";
 
-// Định nghĩa __dirname cho ES Module
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -42,11 +41,11 @@ if (typeof window !== "undefined") {
     });
   }
 
-server.use(express.static(path.join(__dirname, "DarkGame")));
+server.use(express.static(path.join(__dirname, "public")));
 
 bot.onText(/help/, (msg) => bot.sendMessage(msg.from.id, "Say /game if you want to play."));
 bot.onText(/start|game/, (msg) => {
-    const imageUrl = "https://darkkinghtcoin.web.app/images/BannerChat.jpg";
+    const imageUrl = "https://imgur.com/a/UBKDyTa.jpg";
     bot.sendPhoto(msg.from.id, imageUrl, {
         caption: "👯 Got friends? Invite them! Spread the fun and multiply your SEED together.",
         reply_markup: {
