@@ -1,43 +1,64 @@
-require('dotenv').config(); 
-const express = require("express");
-const path = require("path");
-const TelegramBot = require("node-telegram-bot-api");
+import dotenv from "dotenv";
+dotenv.config();
+
+import express from "express";
+import path from "path";
+import { fileURLToPath } from "url";
+import TelegramBot from "node-telegram-bot-api";
+import { Keyboard } from "telegram-keyboard";
+import { initializeApp } from "firebase/app";
+import { getAnalytics,isSupported  } from "firebase/analytics";
+
+// Định nghĩa __dirname cho ES Module
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const TOKEN = process.env.TOKEN_BOT_TELEGRAM;
 const server = express();
-const bot = new TelegramBot(TOKEN, {
-    polling: true
-});
+const bot = new TelegramBot(TOKEN, { polling: true });
 const port = process.env.PORT || 5000;
 const gameName = "DarkGame";
 const queries = {};
-const { Keyboard } = require('telegram-keyboard')
 
-server.use(express.static(path.join(__dirname, 'DarkGame')));
+// Firebase config
+const firebaseConfig = {
+  apiKey: "AIzaSyAq5GQv5LSmpS-cN-Zw_5-7_vkeZf004vo",
+  authDomain: "darkkinghtcoin.firebaseapp.com",
+  projectId: "darkkinghtcoin",
+  storageBucket: "darkkinghtcoin.firebasestorage.app",
+  messagingSenderId: "804426478668",
+  appId: "1:804426478668:web:8ecf9122df4b4a9dc9b0e9",
+  measurementId: "G-H84V28GBP5"
+};
+
+const app = initializeApp(firebaseConfig);
+if (typeof window !== "undefined") {
+    isSupported().then((supported) => {
+      if (supported) {
+        const analytics = getAnalytics(app);
+      } else {
+        console.log("Analytics is not supported in this environment.");
+      }
+    });
+  }
+
+server.use(express.static(path.join(__dirname, "DarkGame")));
+
 bot.onText(/help/, (msg) => bot.sendMessage(msg.from.id, "Say /game if you want to play."));
-
 bot.onText(/start|game/, (msg) => {
-    const imageUrl = "https://mrhia.github.io/DarkKnightwebgl/images/BannerChat.jpg";
+    const imageUrl = "https://darkkinghtcoin.web.app/images/BannerChat.jpg";
     bot.sendPhoto(msg.from.id, imageUrl, {
-        caption: "👯 Got friends? Invite them! Spread the fun and multiply your SEED together."
-            + " That’s all you need to know to get started. ⬇️",
+        caption: "👯 Got friends? Invite them! Spread the fun and multiply your SEED together.",
         reply_markup: {
             inline_keyboard: [
-                [{
-                    text: '🎮 Play Game Here',
-                    web_app: {
-                        url: "https://mrhia.github.io/DarkKnightwebgl"
-                    }
-                }]
+                [{ text: "🎮 Play Game Here", web_app: { url: "https://darkkinghtcoin.web.app" } }]
             ]
         }
-    }).then(() => {
-        console.log('✅ Image sent successfully.');
-    }).catch(err => {
-        console.error('❌ Error sending image:', err);
-        bot.sendMessage(msg.from.id, "⚠️ Oops! There was an issue sending the image.");
-    });
-
+    }).then(() => console.log("✅ Image sent successfully."))
+      .catch(err => console.error("❌ Error sending image:", err));
 });
+
+server.listen(port, () => console.log(`Server running on port ${port}`));
 
 // bot.on("callback_query", function (query) {
 //     if (query.game_short_name !== gameName) {
@@ -71,4 +92,4 @@ bot.onText(/start|game/, (msg) => {
 //     bot.setGameScore(query.from.id, parseInt(req.params.score), options,
 //         function (err, result) { });
 // });
-server.listen(port);
+// server.listen(port);
